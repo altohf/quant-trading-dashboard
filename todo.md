@@ -42,3 +42,14 @@
 - [x] Creare pagine login e registrazione
 - [x] Aggiornare codice su GitHub
 - [ ] Redeploy su DigitalOcean
+
+
+## Sistema Dati Real-Time
+- [ ] Implementare servizio raccolta dati Databento (ES futures tick-by-tick)
+- [ ] Implementare raccolta dati VIX da Yahoo Finance
+- [ ] Implementare raccolta dati opzioni SPY per calcolo GEX
+- [ ] Implementare calcolo GEX interno
+- [ ] Implementare modello HMM per regime detection
+- [ ] Implementare generazione segnali AI
+- [ ] Configurare processo background sul server
+- [ ] Testare sistema con dati live

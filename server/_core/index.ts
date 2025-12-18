@@ -8,6 +8,7 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { startTradingEngine } from "../services/tradingEngine";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -62,6 +63,14 @@ async function startServer() {
 
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
+    
+    // Start the trading engine in production
+    if (process.env.NODE_ENV !== "development") {
+      console.log("Starting Trading Engine...");
+      startTradingEngine().catch(err => {
+        console.error("Failed to start Trading Engine:", err);
+      });
+    }
   });
 }
 

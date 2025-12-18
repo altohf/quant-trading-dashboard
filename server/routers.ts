@@ -5,6 +5,7 @@ import * as db from "./db";
 import * as auth from "./auth";
 import * as marketData from "./services/marketData";
 import * as databento from "./services/databento";
+import * as tradingEngine from "./services/tradingEngine";
 
 // Cookie names for tokens
 const ACCESS_TOKEN_COOKIE = "access_token";
@@ -489,6 +490,28 @@ export const appRouter = router({
       }
       
       return { success: true, message: "Demo data seeded successfully" };
+    }),
+  }),
+
+  // ============ TRADING ENGINE ============
+  tradingEngine: router({
+    status: publicProcedure.query(() => {
+      return tradingEngine.getEngineStatus();
+    }),
+    
+    start: protectedProcedure.mutation(async () => {
+      await tradingEngine.startTradingEngine();
+      return { success: true, message: "Trading engine started" };
+    }),
+    
+    stop: protectedProcedure.mutation(() => {
+      tradingEngine.stopTradingEngine();
+      return { success: true, message: "Trading engine stopped" };
+    }),
+    
+    forceIteration: protectedProcedure.mutation(async () => {
+      await tradingEngine.forceIteration();
+      return { success: true, message: "Forced iteration completed" };
     }),
   }),
 });
