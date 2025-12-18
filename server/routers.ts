@@ -10,10 +10,10 @@ import * as databento from "./services/databento";
 const ACCESS_TOKEN_COOKIE = "access_token";
 const REFRESH_TOKEN_COOKIE = "refresh_token";
 
-// Cookie options
+// Cookie options - secure: false for HTTP, true only for HTTPS
 const getCookieOptions = (maxAge: number) => ({
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
+  secure: false, // Set to true only when using HTTPS
   sameSite: "lax" as const,
   path: "/",
   maxAge,
