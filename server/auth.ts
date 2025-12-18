@@ -1,7 +1,7 @@
 import { eq, and, gt } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { users, refreshTokens, InsertUser } from "../drizzle/schema";
-import * as bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 import * as jose from "jose";
 import { nanoid } from "nanoid";
 

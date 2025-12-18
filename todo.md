@@ -40,5 +40,5 @@
 - [x] Rimuovere dipendenza OAuth Manus
 - [x] Implementare auth JWT standalone con bcrypt
 - [x] Creare pagine login e registrazione
-- [ ] Aggiornare codice su GitHub
+- [x] Aggiornare codice su GitHub
 - [ ] Redeploy su DigitalOcean
