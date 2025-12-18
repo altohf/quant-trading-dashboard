@@ -19,7 +19,14 @@ export default function Register() {
 
   const utils = trpc.useUtils();
   const registerMutation = trpc.auth.register.useMutation({
-    onSuccess: async () => {
+    onSuccess: async (data) => {
+      // Store tokens in localStorage as fallback for HTTP
+      if (data.accessToken) {
+        localStorage.setItem("access_token", data.accessToken);
+      }
+      if (data.refreshToken) {
+        localStorage.setItem("refresh_token", data.refreshToken);
+      }
       await utils.auth.me.invalidate();
       setLocation("/dashboard");
     },

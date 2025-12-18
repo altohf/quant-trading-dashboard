@@ -17,7 +17,14 @@ export default function Login() {
 
   const utils = trpc.useUtils();
   const loginMutation = trpc.auth.login.useMutation({
-    onSuccess: async () => {
+    onSuccess: async (data) => {
+      // Store tokens in localStorage as fallback for HTTP
+      if (data.accessToken) {
+        localStorage.setItem("access_token", data.accessToken);
+      }
+      if (data.refreshToken) {
+        localStorage.setItem("refresh_token", data.refreshToken);
+      }
       await utils.auth.me.invalidate();
       setLocation("/dashboard");
     },

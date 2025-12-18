@@ -70,7 +70,8 @@ export const appRouter = router({
           ctx.res.cookie(REFRESH_TOKEN_COOKIE, loginResult.refreshToken, getCookieOptions(7 * 24 * 60 * 60)); // 7 days
         }
         
-        return { success: true, user: loginResult.user };
+        // Also return tokens for localStorage fallback
+        return { success: true, user: loginResult.user, accessToken: loginResult.accessToken, refreshToken: loginResult.refreshToken };
       }),
     
     login: publicProcedure
@@ -89,7 +90,8 @@ export const appRouter = router({
         ctx.res.cookie(ACCESS_TOKEN_COOKIE, result.accessToken!, getCookieOptions(15 * 60));
         ctx.res.cookie(REFRESH_TOKEN_COOKIE, result.refreshToken!, getCookieOptions(7 * 24 * 60 * 60));
         
-        return { success: true, user: result.user };
+        // Also return tokens for localStorage fallback (useful for HTTP without secure cookies)
+        return { success: true, user: result.user, accessToken: result.accessToken, refreshToken: result.refreshToken };
       }),
     
     logout: publicProcedure.mutation(async ({ ctx }) => {
