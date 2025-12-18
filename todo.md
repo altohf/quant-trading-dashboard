@@ -25,3 +25,13 @@
 - [x] Componenti riutilizzabili per metriche
 - [x] Animazioni e transizioni fluide
 
+
+## Integrazione Dati Reali
+- [x] Ricercare API Tradytics o alternative per dati opzionari
+- [x] Integrare Databento per dati futures CME reali
+- [x] Integrare provider dati opzionari per VIX e GEX
+- [ ] Creare repository GitHub
+- [ ] Pushare progetto su GitHub
+- [ ] Preparare script deployment per DigitalOcean
+- [ ] Documentazione deployment
+

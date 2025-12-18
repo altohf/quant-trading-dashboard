@@ -4,6 +4,8 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
+import * as marketData from "./services/marketData";
+import * as databento from "./services/databento";
 
 export const appRouter = router({
   system: systemRouter,
@@ -189,6 +191,73 @@ export const appRouter = router({
         openPositionsCount: openPositions.length,
         maxDrawdown: todayStats?.maxDrawdown ?? "0",
       };
+    }),
+  }),
+
+  // ============ MARKET DATA (Real-time) ============
+  marketData: router({
+    // VIX Data
+    vix: publicProcedure.query(async () => {
+      return await marketData.getVIXData();
+    }),
+    
+    vixTermStructure: publicProcedure.query(async () => {
+      return await marketData.getVIXTermStructure();
+    }),
+    
+    // GEX (Gamma Exposure)
+    gex: publicProcedure.query(async () => {
+      return await marketData.calculateGEX();
+    }),
+    
+    // SPY Price
+    spyPrice: publicProcedure.query(async () => {
+      return await marketData.getSPYPrice();
+    }),
+    
+    // SPY History
+    spyHistory: publicProcedure
+      .input(z.object({ range: z.string().default("1mo") }).optional())
+      .query(async ({ input }) => {
+        return await marketData.getSPYHistory(input?.range ?? "1mo");
+      }),
+    
+    // Complete Market Context
+    context: publicProcedure.query(async () => {
+      return await marketData.getMarketContext();
+    }),
+  }),
+
+  // ============ DATABENTO (Futures Data) ============
+  databento: router({
+    // Status
+    status: publicProcedure.query(async () => {
+      return await databento.getDatabentoStatus();
+    }),
+    
+    // Current ES Symbol
+    currentSymbol: publicProcedure.query(() => {
+      return databento.getCurrentESSymbol();
+    }),
+    
+    // ES Bars
+    esBars: publicProcedure
+      .input(z.object({
+        startDate: z.string(),
+        endDate: z.string(),
+        interval: z.enum(["1m", "5m", "15m", "1h", "1d"]).default("1m"),
+      }))
+      .query(async ({ input }) => {
+        return await databento.getESBars(
+          new Date(input.startDate),
+          new Date(input.endDate),
+          input.interval
+        );
+      }),
+    
+    // Latest ES Price
+    latestPrice: publicProcedure.query(async () => {
+      return await databento.getLatestESPrice();
     }),
   }),
 
