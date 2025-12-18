@@ -14,11 +14,13 @@ import * as db from "../db";
 
 // Trading configuration
 const TRADING_CONFIG = {
-  // Trading hours (CET)
-  tradingStartHour: 15,
-  tradingStartMinute: 30,
+  // Trading hours (CET) - Extended session to capture pre-market and post-close
+  // 14:00 CET = 08:00 EST (pre-market)
+  // 22:30 CET = 16:30 EST (30 min after close)
+  tradingStartHour: 14,
+  tradingStartMinute: 0,
   tradingEndHour: 22,
-  tradingEndMinute: 0,
+  tradingEndMinute: 30,
   
   // Data collection interval (milliseconds)
   dataCollectionInterval: 60000, // 1 minute
