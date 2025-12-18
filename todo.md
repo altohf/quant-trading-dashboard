@@ -35,3 +35,10 @@
 - [x] Preparare script deployment per DigitalOcean
 - [x] Documentazione deployment
 
+
+## Autenticazione Standalone
+- [x] Rimuovere dipendenza OAuth Manus
+- [x] Implementare auth JWT standalone con bcrypt
+- [x] Creare pagine login e registrazione
+- [ ] Aggiornare codice su GitHub
+- [ ] Redeploy su DigitalOcean

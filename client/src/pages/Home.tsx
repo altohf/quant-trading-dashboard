@@ -1,7 +1,6 @@
-import { useAuth } from "@/_core/hooks/useAuth";
+import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getLoginUrl } from "@/const";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   Activity, 
   BarChart3, 
@@ -10,14 +9,13 @@ import {
   LineChart, 
   Shield, 
   Zap,
-  TrendingUp,
-  Settings,
-  Bell
+  TrendingUp
 } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Home() {
-  const { user, loading, isAuthenticated } = useAuth();
+  const { data: user, isLoading } = trpc.auth.me.useQuery();
+  const isAuthenticated = !!user;
 
   return (
     <div className="min-h-screen bg-background">
@@ -37,12 +35,12 @@ export default function Home() {
                 </Button>
               </Link>
             ) : (
-              <a href={getLoginUrl()}>
+              <Link href="/login">
                 <Button>
                   Accedi
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
-              </a>
+              </Link>
             )}
           </nav>
         </div>
@@ -74,16 +72,20 @@ export default function Home() {
                   </Button>
                 </Link>
               ) : (
-                <a href={getLoginUrl()}>
-                  <Button size="lg" className="glow-primary">
-                    Inizia Ora
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </a>
+                <>
+                  <Link href="/login">
+                    <Button size="lg" className="glow-primary">
+                      Inizia Ora
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button size="lg" variant="outline">
+                      Registrati
+                    </Button>
+                  </Link>
+                </>
               )}
-              <Button size="lg" variant="outline">
-                Scopri di più
-              </Button>
             </div>
           </div>
         </div>
@@ -203,12 +205,19 @@ export default function Home() {
                 </Button>
               </Link>
             ) : (
-              <a href={getLoginUrl()}>
-                <Button size="lg" className="glow-primary">
-                  Accedi Ora
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Button>
-              </a>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link href="/login">
+                  <Button size="lg" className="glow-primary">
+                    Accedi Ora
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button size="lg" variant="outline">
+                    Crea Account
+                  </Button>
+                </Link>
+              </div>
             )}
           </div>
         </div>
