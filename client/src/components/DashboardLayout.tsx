@@ -21,15 +21,20 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Activity, BarChart3, Target, Shield, LineChart, Settings, Brain, Bell } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
 const menuItems = [
-  { icon: LayoutDashboard, label: "Page 1", path: "/" },
-  { icon: Users, label: "Page 2", path: "/some-path" },
+  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
+  { icon: Activity, label: "Segnali", path: "/signals" },
+  { icon: Brain, label: "Regime", path: "/regime" },
+  { icon: Target, label: "Ottimizzazione 3D", path: "/optimization" },
+  { icon: Shield, label: "Risk Management", path: "/risk" },
+  { icon: LineChart, label: "Performance", path: "/performance" },
+  { icon: Settings, label: "Impostazioni", path: "/settings" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -170,8 +175,8 @@ function DashboardLayoutContent({
               </button>
               {!isCollapsed ? (
                 <div className="flex items-center gap-2 min-w-0">
-                  <span className="font-semibold tracking-tight truncate">
-                    Navigation
+                  <span className="font-semibold tracking-tight truncate gradient-text">
+                    QuantAI
                   </span>
                 </div>
               ) : null}
